@@ -1,0 +1,5 @@
+name: BukkitCommandFrameworkExample
+version: 0.1.0-SNAPSHOT
+main: me.lukavns.commandframework.examples.bukkit.BukkitExamplePlugin
+api-version: "1.13"
+description: Example plugin for Command Framework

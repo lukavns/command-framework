@@ -1,0 +1,4 @@
+name: BungeeCommandFrameworkExample
+version: 0.1.0-SNAPSHOT
+main: me.lukavns.commandframework.examples.bungee.BungeeExamplePlugin
+description: Example plugin for Command Framework

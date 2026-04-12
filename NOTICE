@@ -1,0 +1,23 @@
+Command Framework
+Copyright 2026 Luka de Souza Lima
+
+This product is a fork-inspired successor of the original
+"command-framework" project by Luiz Carlos Mourao Paes de Carvalho
+and contributors:
+https://github.com/saiintbrisson/command-framework
+
+The upstream project is licensed under the Apache License, Version 2.0.
+This distribution preserves the Apache-2.0 license obligations from upstream.
+
+This repository is a substantial rewrite that keeps the original project's
+annotation-driven command spirit while replacing the old architecture and
+narrowing the supported platforms to:
+- BungeeCord
+- Bukkit
+- Spigot
+- Paper
+- Velocity
+
+Attribution notices from upstream should be preserved where they continue to
+apply to copied or modified material. New source files in this repository are
+copyright their respective authors.
