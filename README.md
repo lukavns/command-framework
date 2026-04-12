@@ -120,7 +120,7 @@ Main changes:
 
 ## License And Attribution
 
-This repository is a derivative rewrite of the original `saiintbrisson/command-framework`.
+This repository is a derivative rewrite of the original [`saiintbrisson/command-framework`](https://github.com/saiintbrisson/command-framework).
 
 - upstream license obligations remain Apache-2.0
 - attribution is preserved in this repository

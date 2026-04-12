@@ -1,6 +1,6 @@
 # Usage Guide
 
-This guide covers the common ways to use the framework without repeating every internal detail from the other docs.
+This guide covers the common ways to use the framework without repeating every internal detail from the other docs. If you prefer, you can also look at the sample projects in the `examples` directory, which show real and complete framework usage.
 
 Public annotations:
 
