@@ -31,7 +31,7 @@ public final class AtlasLobbyPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        this.commandFramework = BukkitCommand commandFramework.builder(this).build();
+        this.commandFramework = BukkitCommandFramework.builder(this).build();
         this.commandFramework.registerCommands(new ProfileCommands());
     }
 }
@@ -46,7 +46,7 @@ public final class GatewayProxyPlugin extends Plugin {
 
     @Override
     public void onEnable() {
-        this.commandFramework = BungeeCommand commandFramework.builder(this).build();
+        this.commandFramework = BungeeCommandFramework.builder(this).build();
         this.commandFramework.registerCommands(new NetworkCommands());
     }
 }
@@ -62,7 +62,7 @@ public final class NorthwindVelocityPlugin {
 
     @Inject
     public NorthwindVelocityPlugin(ProxyServer proxyServer) {
-        this.commandFramework = VelocityCommandcommandFramework.builder(proxyServer, this).build();
+        this.commandFramework = VelocityCommandFramework.builder(proxyServer, this).build();
     }
 
     @Subscribe
@@ -227,7 +227,7 @@ public final class CustomerRecord {
 ```
 
 ```java
- commandFramework.resolvers().register(CustomerRecord.class, (context, parameter, input) -> {
+commandFramework.resolvers().register(CustomerRecord.class, (context, parameter, input) -> {
     try {
         return new CustomerRecord(UUID.fromString(input));
     } catch (IllegalArgumentException exception) {
@@ -272,7 +272,7 @@ public final class SystemCommands {
 You can register your own provided values too:
 
 ```java
- commandFramework.providedValues().register(MyService.class, new ProvidedValueFactory<MyService>() {
+commandFramework.providedValues().register(MyService.class, new ProvidedValueFactory<MyService>() {
     @Override
     public Class<MyService> type() {
         return MyService.class;
@@ -292,7 +292,7 @@ You can register your own provided values too:
 For simple customization, use the message holder:
 
 ```java
- commandFramework.exceptionMessages()
+commandFramework.exceptionMessages()
     .setMessage(MessageType.INCORRECT_USAGE, "§cIncorrect usage, try: /{usage}")
     .setMessage(MessageType.MISSING_PERMISSION, "§cYou do not have permission to use this command.")
     .setMessage(MessageType.INCORRECT_TARGET, "§cThis command can only be used by {target}.")
@@ -318,7 +318,7 @@ Async must be explicit in both places:
 ```java
 Executor executor = Executors.newFixedThreadPool(2);
 
-BukkitCommandFramework commandFramework = BukkitCommand commandFramework.builder(plugin)
+BukkitCommandFramework commandFramework = BukkitCommandFramework.builder(plugin)
     .asyncExecutor(executor)
     .build();
 ```
