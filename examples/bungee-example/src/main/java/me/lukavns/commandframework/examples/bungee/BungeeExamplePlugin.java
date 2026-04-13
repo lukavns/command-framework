@@ -1,9 +1,8 @@
 package me.lukavns.commandframework.examples.bungee;
 
-import java.util.ArrayList;
-import java.util.List;
 import me.lukavns.commandframework.bungee.bootstrap.BungeeCommandFramework;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import me.lukavns.commandframework.examples.bungee.message.ExceptionMessages;
+import me.lukavns.commandframework.examples.bungee.suggestion.ArgumentSuggestions;
 import net.md_5.bungee.api.plugin.Plugin;
 
 public final class BungeeExamplePlugin extends Plugin {
@@ -13,14 +12,12 @@ public final class BungeeExamplePlugin extends Plugin {
     @Override
     public void onEnable() {
         this.framework = BungeeCommandFramework.builder(this).build();
-        this.framework.suggestions().register("online-players", context -> {
-            List<String> names = new ArrayList<String>();
-            for (ProxiedPlayer player : getProxy().getPlayers()) {
-                names.add(player.getName());
-            }
-            return names;
-        });
+        
+        ExceptionMessages.register(this.framework);
+        ArgumentSuggestions.register(this.framework);
 
-        this.framework.register(new BungeeExampleCommands(this));
+        this.framework.registerCommands(
+            new BungeeExampleCommands(this)
+        );
     }
 }

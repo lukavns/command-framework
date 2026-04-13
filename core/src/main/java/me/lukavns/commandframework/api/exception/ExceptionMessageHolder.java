@@ -5,30 +5,30 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
-public final class CommandMessageHolder {
+public final class ExceptionMessageHolder {
 
-    private final Map<CommandMessageType, String> messages = new EnumMap<CommandMessageType, String>(CommandMessageType.class);
+    private final Map<ExceptionMessageType, String> messages = new EnumMap<ExceptionMessageType, String>(ExceptionMessageType.class);
 
-    public CommandMessageHolder() {
-        for (CommandMessageType type : CommandMessageType.values()) {
+    public ExceptionMessageHolder() {
+        for (ExceptionMessageType type : ExceptionMessageType.values()) {
             this.messages.put(type, type.defaultMessage());
         }
     }
 
-    public String getMessage(CommandMessageType type) {
+    public String getMessage(ExceptionMessageType type) {
         return this.messages.get(Objects.requireNonNull(type, "type"));
     }
 
-    public CommandMessageHolder setMessage(CommandMessageType type, String message) {
+    public ExceptionMessageHolder setMessage(ExceptionMessageType type, String message) {
         this.messages.put(Objects.requireNonNull(type, "type"), Objects.requireNonNull(message, "message"));
         return this;
     }
 
-    public Map<CommandMessageType, String> asMap() {
+    public Map<ExceptionMessageType, String> asMap() {
         return Collections.unmodifiableMap(this.messages);
     }
 
-    public String render(CommandMessageType type, Map<String, String> placeholders) {
+    public String render(ExceptionMessageType type, Map<String, String> placeholders) {
         String rendered = getMessage(type);
         if (rendered == null || rendered.isEmpty() || placeholders == null || placeholders.isEmpty()) {
             return rendered;

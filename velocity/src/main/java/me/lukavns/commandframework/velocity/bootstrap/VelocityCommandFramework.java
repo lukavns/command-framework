@@ -9,7 +9,7 @@ import me.lukavns.commandframework.api.CommandScanner;
 import me.lukavns.commandframework.api.command.CommandDefinition;
 import me.lukavns.commandframework.api.context.CommandContext;
 import me.lukavns.commandframework.api.context.ProvidedValueFactory;
-import me.lukavns.commandframework.api.exception.CommandMessageHolder;
+import me.lukavns.commandframework.api.exception.ExceptionMessageHolder;
 import me.lukavns.commandframework.api.exception.ExceptionMessageResolver;
 import me.lukavns.commandframework.core.dispatch.DefaultCommandDispatcher;
 import me.lukavns.commandframework.core.parse.ArgumentParser;
@@ -36,7 +36,7 @@ public final class VelocityCommandFramework {
     private final DefaultSuggestionRegistry<CommandSource> suggestionRegistry;
     private final CommandScanner commandScanner;
     private final DefaultCommandDispatcher<CommandSource> dispatcher;
-    private final CommandMessageHolder messageHolder;
+    private final ExceptionMessageHolder messageHolder;
     private final VelocityCommandRegistrar registrar;
 
     private VelocityCommandFramework(
@@ -50,7 +50,7 @@ public final class VelocityCommandFramework {
         this.resolverRegistry = new DefaultArgumentResolverRegistry();
         this.providedValueRegistry = new DefaultProvidedValueRegistry();
         this.suggestionRegistry = new DefaultSuggestionRegistry<CommandSource>();
-        this.messageHolder = new CommandMessageHolder();
+        this.messageHolder = new ExceptionMessageHolder();
 
         CoreArgumentResolvers.registerDefaults(this.resolverRegistry);
         VelocityArgumentResolvers.registerDefaults(this.resolverRegistry, this.proxyServer);
@@ -86,7 +86,11 @@ public final class VelocityCommandFramework {
         this.registrar.sync();
     }
 
-    public DefaultArgumentResolverRegistry resolvers() {
+    public void registerCommands(Object... commandHolders) {
+        register(commandHolders);
+    }
+
+    public DefaultArgumentResolverRegistry argumentResolvers() {
         return this.resolverRegistry;
     }
 
@@ -94,22 +98,18 @@ public final class VelocityCommandFramework {
         return this.providedValueRegistry;
     }
 
-    public DefaultSuggestionRegistry<CommandSource> suggestions() {
+    public DefaultSuggestionRegistry<CommandSource> argumentSuggestions() {
         return this.suggestionRegistry;
     }
 
-    public DefaultCommandDispatcher<CommandSource> dispatcher() {
+    public DefaultCommandDispatcher<CommandSource> commandDispatcher() {
         return this.dispatcher;
     }
 
-    public CommandMessageHolder messages() {
+    public ExceptionMessageHolder exceptionMessages() {
         return this.messageHolder;
     }
-
-    public CommandMessageHolder messageHolder() {
-        return this.messageHolder;
-    }
-
+    
     public VelocityCommandRegistrar commandRegistrar() {
         return this.registrar;
     }

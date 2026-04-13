@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Map;
 import me.lukavns.commandframework.api.context.CommandContext;
 import me.lukavns.commandframework.api.exception.ArgumentParseException;
-import me.lukavns.commandframework.api.exception.CommandMessageHolder;
-import me.lukavns.commandframework.api.exception.CommandMessageType;
+import me.lukavns.commandframework.api.exception.ExceptionMessageHolder;
+import me.lukavns.commandframework.api.exception.ExceptionMessageType;
 import me.lukavns.commandframework.api.exception.CommandFrameworkException;
 import me.lukavns.commandframework.api.exception.ExceptionMessageResolver;
 import me.lukavns.commandframework.api.exception.InvalidCommandSenderException;
@@ -17,9 +17,9 @@ import com.velocitypowered.api.command.CommandSource;
 
 public final class VelocityExceptionMessenger implements ExceptionMessageResolver<CommandSource> {
 
-    private final CommandMessageHolder messageHolder;
+    private final ExceptionMessageHolder messageHolder;
 
-    public VelocityExceptionMessenger(CommandMessageHolder messageHolder) {
+    public VelocityExceptionMessenger(ExceptionMessageHolder messageHolder) {
         this.messageHolder = messageHolder;
     }
 
@@ -28,21 +28,21 @@ public final class VelocityExceptionMessenger implements ExceptionMessageResolve
         if (exception instanceof PermissionDeniedException) {
             PermissionDeniedException permissionException = (PermissionDeniedException) exception;
             return this.messageHolder.render(
-                CommandMessageType.NO_PERMISSION,
+                ExceptionMessageType.MISSING_PERMISSION,
                 placeholders(context, exception, permissionException.permission(), null)
             );
         }
         if (exception instanceof InvalidCommandSenderException) {
             InvalidCommandSenderException senderException = (InvalidCommandSenderException) exception;
             return this.messageHolder.render(
-                CommandMessageType.INCORRECT_TARGET,
+                ExceptionMessageType.INCORRECT_TARGET,
                 placeholders(context, exception, null, describeSenderTypes(senderException.supportedTypes()))
             );
         }
         if (exception instanceof ArgumentParseException) {
-            return this.messageHolder.render(CommandMessageType.INCORRECT_USAGE, placeholders(context, exception, null, null));
+            return this.messageHolder.render(ExceptionMessageType.INCORRECT_USAGE, placeholders(context, exception, null, null));
         }
-        return this.messageHolder.render(CommandMessageType.ERROR, placeholders(context, exception, null, null));
+        return this.messageHolder.render(ExceptionMessageType.INTERNAL_ERROR, placeholders(context, exception, null, null));
     }
 
     private Map<String, String> placeholders(

@@ -31,6 +31,7 @@ public final class BungeeExampleCommands {
 
     @SubCommand(
         name = "greet",
+        usage = "framework greet <player> [message]",
         aliases = {"hello"},
         description = "Greets an online Bungee player."
     )

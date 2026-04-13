@@ -29,6 +29,7 @@ public final class BukkitExampleCommands {
 
     @SubCommand(
         name = "greet",
+        usage = "framework greet <player> [message]",
         aliases = {"hello"},
         description = "Greets an online player with an optional custom message."
     )

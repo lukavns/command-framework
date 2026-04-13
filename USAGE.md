@@ -1,6 +1,6 @@
 # Usage Guide
 
-This guide covers the common ways to use the framework without repeating every internal detail from the other docs. If you prefer, you can also look at the sample projects in the `examples` directory, which show real and complete framework usage.
+This guide covers the common ways to use the commandFramework without repeating every internal detail from the other docs. If you prefer, you can also look at the sample projects in the `examples` directory, which show real and complete commandFramework usage.
 
 Public annotations:
 
@@ -27,12 +27,12 @@ Platform modules already depend on `core`.
 ```java
 public final class AtlasLobbyPlugin extends JavaPlugin {
 
-    private BukkitCommandFramework framework;
+    private BukkitCommandFramework commandFramework;
 
     @Override
     public void onEnable() {
-        this.framework = BukkitCommandFramework.builder(this).build();
-        this.framework.register(new ProfileCommands());
+        this.commandFramework = BukkitCommand commandFramework.builder(this).build();
+        this.commandFramework.registerCommands(new ProfileCommands());
     }
 }
 ```
@@ -42,12 +42,12 @@ public final class AtlasLobbyPlugin extends JavaPlugin {
 ```java
 public final class GatewayProxyPlugin extends Plugin {
 
-    private BungeeCommandFramework framework;
+    private BungeeCommandFramework commandFramework;
 
     @Override
     public void onEnable() {
-        this.framework = BungeeCommandFramework.builder(this).build();
-        this.framework.register(new NetworkCommands());
+        this.commandFramework = BungeeCommand commandFramework.builder(this).build();
+        this.commandFramework.registerCommands(new NetworkCommands());
     }
 }
 ```
@@ -58,16 +58,16 @@ public final class GatewayProxyPlugin extends Plugin {
 @Plugin(id = "northwind-network", name = "NorthwindNetwork", version = "1.0.0")
 public final class NorthwindVelocityPlugin {
 
-    private final VelocityCommandFramework framework;
+    private final VelocityCommandFramework commandFramework;
 
     @Inject
     public NorthwindVelocityPlugin(ProxyServer proxyServer) {
-        this.framework = VelocityCommandFramework.builder(proxyServer, this).build();
+        this.commandFramework = VelocityCommandcommandFramework.builder(proxyServer, this).build();
     }
 
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
-        this.framework.register(new NetworkCommands());
+        this.commandFramework.registerCommands(new NetworkCommands());
     }
 }
 ```
@@ -185,7 +185,7 @@ public final class TimeControlCommands {
 Register a named provider and point `@Suggest` to it.
 
 ```java
-framework.suggestions().register("online-players", context -> {
+commandFramework.suggestions().register("online-players", context -> {
     List<String> names = new ArrayList<String>();
     for (Player player : Bukkit.getOnlinePlayers()) {
         names.add(player.getName());
@@ -227,7 +227,7 @@ public final class CustomerRecord {
 ```
 
 ```java
-framework.resolvers().register(CustomerRecord.class, (context, parameter, input) -> {
+ commandFramework.resolvers().register(CustomerRecord.class, (context, parameter, input) -> {
     try {
         return new CustomerRecord(UUID.fromString(input));
     } catch (IllegalArgumentException exception) {
@@ -272,7 +272,7 @@ public final class SystemCommands {
 You can register your own provided values too:
 
 ```java
-framework.providedValues().register(MyService.class, new ProvidedValueFactory<MyService>() {
+ commandFramework.providedValues().register(MyService.class, new ProvidedValueFactory<MyService>() {
     @Override
     public Class<MyService> type() {
         return MyService.class;
@@ -292,11 +292,11 @@ framework.providedValues().register(MyService.class, new ProvidedValueFactory<My
 For simple customization, use the message holder:
 
 ```java
-framework.messageHolder()
-    .setMessage(CommandMessageType.INCORRECT_USAGE, "§cIncorrect usage, try: /{usage}")
-    .setMessage(CommandMessageType.NO_PERMISSION, "§cYou do not have permission to use this command.")
-    .setMessage(CommandMessageType.INCORRECT_TARGET, "§cThis command can only be used by {target}.")
-    .setMessage(CommandMessageType.ERROR, "§cInternal server error, please contact an administrator.");
+ commandFramework.exceptionMessages()
+    .setMessage(MessageType.INCORRECT_USAGE, "§cIncorrect usage, try: /{usage}")
+    .setMessage(MessageType.MISSING_PERMISSION, "§cYou do not have permission to use this command.")
+    .setMessage(MessageType.INCORRECT_TARGET, "§cThis command can only be used by {target}.")
+    .setMessage(MessageType.INTERNAL_ERROR, "§cInternal server error, please contact an administrator.");
 ```
 
 Available placeholders:
@@ -318,7 +318,7 @@ Async must be explicit in both places:
 ```java
 Executor executor = Executors.newFixedThreadPool(2);
 
-BukkitCommandFramework framework = BukkitCommandFramework.builder(plugin)
+BukkitCommandFramework commandFramework = BukkitCommand commandFramework.builder(plugin)
     .asyncExecutor(executor)
     .build();
 ```

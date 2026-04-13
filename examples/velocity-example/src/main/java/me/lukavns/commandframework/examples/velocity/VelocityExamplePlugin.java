@@ -1,14 +1,14 @@
 package me.lukavns.commandframework.examples.velocity;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.inject.Inject;
+
+import me.lukavns.commandframework.examples.velocity.message.ExceptionMessages;
+import me.lukavns.commandframework.examples.velocity.suggestion.ArgumentSuggestions;
 import me.lukavns.commandframework.velocity.bootstrap.VelocityCommandFramework;
 import com.google.inject.Singleton;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
-import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 
 @Singleton
@@ -31,13 +31,10 @@ public final class VelocityExamplePlugin {
     @Subscribe
     public void onInitialize(ProxyInitializeEvent event) {
         this.framework = VelocityCommandFramework.builder(this.proxyServer, this).build();
-        this.framework.suggestions().register("online-players", context -> {
-            List<String> names = new ArrayList<String>();
-            for (Player player : this.proxyServer.getAllPlayers()) {
-                names.add(player.getUsername());
-            }
-            return names;
-        });
-        this.framework.register(new VelocityExampleCommands());
+
+        ExceptionMessages.register(this.framework);
+        ArgumentSuggestions.register(this.framework, this.proxyServer);
+
+        this.framework.registerCommands(new VelocityExampleCommands());
     }
 }

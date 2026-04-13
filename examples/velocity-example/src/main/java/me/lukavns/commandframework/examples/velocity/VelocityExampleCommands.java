@@ -25,6 +25,7 @@ public final class VelocityExampleCommands {
 
     @SubCommand(
         name = "greet",
+        usage = "framework greet <player> [message]",
         aliases = {"hello"},
         description = "Greets an online Velocity player."
     )

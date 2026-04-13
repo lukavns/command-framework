@@ -9,7 +9,7 @@ import me.lukavns.commandframework.api.CommandScanner;
 import me.lukavns.commandframework.api.command.CommandDefinition;
 import me.lukavns.commandframework.api.context.CommandContext;
 import me.lukavns.commandframework.api.context.ProvidedValueFactory;
-import me.lukavns.commandframework.api.exception.CommandMessageHolder;
+import me.lukavns.commandframework.api.exception.ExceptionMessageHolder;
 import me.lukavns.commandframework.api.exception.ExceptionMessageResolver;
 import me.lukavns.commandframework.bungee.internal.BungeeExceptionMessenger;
 import me.lukavns.commandframework.bungee.registration.BungeeCommandRegistrar;
@@ -36,7 +36,7 @@ public final class BungeeCommandFramework {
     private final DefaultSuggestionRegistry<CommandSender> suggestionRegistry;
     private final CommandScanner commandScanner;
     private final DefaultCommandDispatcher<CommandSender> dispatcher;
-    private final CommandMessageHolder messageHolder;
+    private final ExceptionMessageHolder messageHolder;
     private final BungeeCommandRegistrar registrar;
 
     private BungeeCommandFramework(
@@ -48,7 +48,7 @@ public final class BungeeCommandFramework {
         this.resolverRegistry = new DefaultArgumentResolverRegistry();
         this.providedValueRegistry = new DefaultProvidedValueRegistry();
         this.suggestionRegistry = new DefaultSuggestionRegistry<CommandSender>();
-        this.messageHolder = new CommandMessageHolder();
+        this.messageHolder = new ExceptionMessageHolder();
 
         CoreArgumentResolvers.registerDefaults(this.resolverRegistry);
         BungeeArgumentResolvers.registerDefaults(this.resolverRegistry, this.plugin.getProxy());
@@ -83,7 +83,11 @@ public final class BungeeCommandFramework {
         this.registrar.sync();
     }
 
-    public DefaultArgumentResolverRegistry resolvers() {
+    public void registerCommands(Object... commandHolders) {
+        register(commandHolders);
+    }
+
+    public DefaultArgumentResolverRegistry argumentResolvers() {
         return this.resolverRegistry;
     }
 
@@ -91,19 +95,15 @@ public final class BungeeCommandFramework {
         return this.providedValueRegistry;
     }
 
-    public DefaultSuggestionRegistry<CommandSender> suggestions() {
+    public DefaultSuggestionRegistry<CommandSender> argumentSuggestions() {
         return this.suggestionRegistry;
     }
 
-    public DefaultCommandDispatcher<CommandSender> dispatcher() {
+    public DefaultCommandDispatcher<CommandSender> commandDispatcher() {
         return this.dispatcher;
     }
 
-    public CommandMessageHolder messages() {
-        return this.messageHolder;
-    }
-
-    public CommandMessageHolder messageHolder() {
+    public ExceptionMessageHolder exceptionMessages() {
         return this.messageHolder;
     }
 
