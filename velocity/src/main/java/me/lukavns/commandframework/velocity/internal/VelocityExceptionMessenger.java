@@ -101,10 +101,10 @@ public final class VelocityExceptionMessenger implements ExceptionMessageResolve
     private String describeSenderType(Class<?> supportedType) {
         String typeName = supportedType.getName();
         if (typeName.endsWith(".Player") || typeName.endsWith(".ProxiedPlayer")) {
-            return "players";
+            return "PLAYER";
         }
         if (typeName.contains("Console")) {
-            return "the console";
+            return "CONSOLE";
         }
         if (typeName.endsWith(".CommandSender") || typeName.endsWith(".CommandSource")) {
             return "command senders";

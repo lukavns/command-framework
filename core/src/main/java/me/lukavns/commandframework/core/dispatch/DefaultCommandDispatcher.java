@@ -56,6 +56,7 @@ public final class DefaultCommandDispatcher<S> implements CommandDispatcher<S> {
             return CommandResult.noMatch();
         }
 
+        bindMatchedCommand(context, match.definition());
         validate(context, match.definition());
         ParsedInvocation parsed = this.argumentParser.parse(context, match.definition(), match.consumedPathSegments());
         List<String> commandArguments = context.rawArguments().subList(match.consumedPathSegments(), context.rawArguments().size());
@@ -135,6 +136,12 @@ public final class DefaultCommandDispatcher<S> implements CommandDispatcher<S> {
                 "Failed to invoke " + definition.handler().declaringType() + "#" + definition.handler().methodName(),
                 exception
             );
+        }
+    }
+
+    private void bindMatchedCommand(CommandContext<S> context, CommandDefinition definition) {
+        if (context instanceof BaseCommandContext) {
+            ((BaseCommandContext<S>) context).bindCommand(definition);
         }
     }
 }

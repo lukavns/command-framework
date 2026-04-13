@@ -2,7 +2,6 @@
 .gradle-home
 .gradle-verify
 **/build/
-**/test/
 out/
 
 .idea/

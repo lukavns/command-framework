@@ -20,6 +20,7 @@ public abstract class BaseCommandContext<S> implements Context<S> {
     private final String label;
     private final List<String> rawArguments;
     private final Map<Class<?>, Object> providedValues;
+    private CommandDefinition command;
 
     protected BaseCommandContext(S sender, String label, List<String> rawArguments, Map<Class<?>, Object> providedValues) {
         this.sender = sender;
@@ -45,7 +46,7 @@ public abstract class BaseCommandContext<S> implements Context<S> {
 
     @Override
     public Optional<CommandDefinition> command() {
-        return Optional.empty();
+        return Optional.ofNullable(this.command);
     }
 
     @Override
@@ -56,5 +57,9 @@ public abstract class BaseCommandContext<S> implements Context<S> {
     @Override
     public Map<Class<?>, Object> providedValues() {
         return this.providedValues;
+    }
+
+    final void bindCommand(CommandDefinition command) {
+        this.command = command;
     }
 }

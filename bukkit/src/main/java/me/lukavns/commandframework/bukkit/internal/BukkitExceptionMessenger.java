@@ -101,13 +101,13 @@ public final class BukkitExceptionMessenger implements ExceptionMessageResolver<
     private String describeSenderType(Class<?> supportedType) {
         String typeName = supportedType.getName();
         if (typeName.endsWith(".Player") || typeName.endsWith(".ProxiedPlayer")) {
-            return "players";
+            return "PLAYER";
         }
         if (typeName.contains("Console")) {
-            return "the console";
+            return "CONSOLE";
         }
         if (typeName.endsWith(".CommandSender") || typeName.endsWith(".CommandSource")) {
-            return "command senders";
+            return "COMMAND_SENDER";
         }
         return supportedType.getSimpleName();
     }
