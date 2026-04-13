@@ -4,6 +4,7 @@
 **/build/
 out/
 
+**/test
 .idea/
 .vscode/
 *.iml
