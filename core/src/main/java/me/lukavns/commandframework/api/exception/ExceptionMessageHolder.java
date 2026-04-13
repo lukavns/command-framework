@@ -7,28 +7,28 @@ import java.util.Objects;
 
 public final class ExceptionMessageHolder {
 
-    private final Map<ExceptionMessageType, String> messages = new EnumMap<ExceptionMessageType, String>(ExceptionMessageType.class);
+    private final Map<MessageType, String> messages = new EnumMap<MessageType, String>(MessageType.class);
 
     public ExceptionMessageHolder() {
-        for (ExceptionMessageType type : ExceptionMessageType.values()) {
+        for (MessageType type : MessageType.values()) {
             this.messages.put(type, type.defaultMessage());
         }
     }
 
-    public String getMessage(ExceptionMessageType type) {
+    public String getMessage(MessageType type) {
         return this.messages.get(Objects.requireNonNull(type, "type"));
     }
 
-    public ExceptionMessageHolder setMessage(ExceptionMessageType type, String message) {
+    public ExceptionMessageHolder setMessage(MessageType type, String message) {
         this.messages.put(Objects.requireNonNull(type, "type"), Objects.requireNonNull(message, "message"));
         return this;
     }
 
-    public Map<ExceptionMessageType, String> asMap() {
+    public Map<MessageType, String> asMap() {
         return Collections.unmodifiableMap(this.messages);
     }
 
-    public String render(ExceptionMessageType type, Map<String, String> placeholders) {
+    public String render(MessageType type, Map<String, String> placeholders) {
         String rendered = getMessage(type);
         if (rendered == null || rendered.isEmpty() || placeholders == null || placeholders.isEmpty()) {
             return rendered;

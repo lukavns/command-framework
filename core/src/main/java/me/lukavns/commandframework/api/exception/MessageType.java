@@ -1,11 +1,19 @@
 package me.lukavns.commandframework.api.exception;
 
-public final class MessageType {
+public enum MessageType {
 
-    public static final ExceptionMessageType INCORRECT_USAGE = ExceptionMessageType.INCORRECT_USAGE;
-    public static final ExceptionMessageType MISSING_PERMISSION = ExceptionMessageType.MISSING_PERMISSION;
-    public static final ExceptionMessageType INCORRECT_TARGET = ExceptionMessageType.INCORRECT_TARGET;
-    public static final ExceptionMessageType INTERNAL_ERROR = ExceptionMessageType.INTERNAL_ERROR;
+    INCORRECT_USAGE("§cCorrect usage: /{usage}"),
+    MISSING_PERMISSION("§cYou do not have permission to use this command."),
+    INCORRECT_TARGET("§cThis command can only be executed by {target}."),
+    INTERNAL_ERROR("§cAn internal command error occurred. Check the logs for details.");
 
-    private MessageType() {}
+    private final String defaultMessage;
+
+    MessageType(String defaultMessage) {
+        this.defaultMessage = defaultMessage;
+    }
+
+    public String defaultMessage() {
+        return this.defaultMessage;
+    }
 }
